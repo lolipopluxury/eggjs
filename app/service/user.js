@@ -33,7 +33,8 @@ class UserService extends Service {
   async encryption(decryptedCode) {
     const salt = this.app.config.salt
     const hashSecret = this.app.config.hashSecret
-    const encode = crypto.createHmac('sha256',hashSecret).update(`${salt}${decryptedCode}`).digest('hex')  
+    const preEncode = crypto.createHmac('sha256',hashSecret).update(decryptedCode).digest('hex')  
+    const encode = crypto.createHmac('sha512',hashSecret).update(`${salt}${preEncode}`).digest('hex')  
     return encode
   }
 }

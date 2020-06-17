@@ -10,8 +10,7 @@ class CsrfController extends Controller {
   /**
    * @summary register
    * @description get csrf token for post request
-   * @router get /token   
-   * @apikey token 
+   * @router get /token      
    */
   //@apikey shoud be added in doc to enable the security check of this api
   async getToken(){
