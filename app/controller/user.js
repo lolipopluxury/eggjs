@@ -46,6 +46,8 @@ class UserController extends Controller {
    * @request formData string *_csrf  
    * @apikey Authorization
    */ 
+
+  //console.log(ctx.state.user) get information in signing
   async login(){   
     const that = this
     const para = this.ctx.request.body

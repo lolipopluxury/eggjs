@@ -5,7 +5,7 @@
  */
 module.exports = app => {
   const { router, controller, jwt } = app;
-  router.get('/', controller.home.index);
+  router.get('/',jwt, controller.home.index);
   router.get('/token',controller.csrf.getToken);
   router.post('/register',controller.user.register);
   router.post('/login',controller.user.login)
