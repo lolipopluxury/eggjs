@@ -21,11 +21,12 @@ class UserService extends Service {
             password:res,
             role:role
           })
-          const save = user.save()
-          return save
+          user.save()          
         }        
-      ).catch()  
-    }else{
+      ).catch()
+      return true 
+    }
+    else{
       return false    
     }
   }

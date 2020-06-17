@@ -25,9 +25,9 @@ class UserController extends Controller {
     const password = para.password
     const role = para.role  
     if(validator.isEmail(email)){
-      const res = await this.service.user.addUser(email,username,password,role)
+      const res = await this.service.user.addUser(email,username,password,role)  
       if(res){
-        this.ctx.body = {msg:`user created successfully, username: ${res.username}`,code:200}
+        this.ctx.body = {msg:`user created successfully, username: ${username}`,code:200}
       }
       else {
         this.ctx.body = {msg:'this user has already existed',code:200}
