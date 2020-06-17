@@ -47,20 +47,25 @@ class UserController extends Controller {
    * @apikey Authorization
    */ 
   async login(){   
+    const that = this
     const para = this.ctx.request.body
     const findUser =  await this.service.user.findUser(para.email)
     if(findUser.length === 0) {
       this.ctx.body = {msg:"this user do not exsist",code:401}
     } else {
-      if(para.password === findUser[0].password){
-        const jwtToken = this.app.jwt.sign({    
-          email: para.email,
-          role: findUser[0].role   
-         }, this.app.config.jwt.secret);
-        this.ctx.body = {msg:"login successfully",code:200,token:jwtToken}
-      }else {
-        this.ctx.body = {msg:"password is uncorrect",code:401}
-      }  
+      const encode = await this.service.user.encryption(para.password).then(
+        function(res){
+          if(res === findUser[0].password){
+            const jwtToken = that.app.jwt.sign({    
+              email: para.email,
+              role: findUser[0].role   
+             }, that.app.config.jwt.secret);
+             that.ctx.body = {msg:"login successfully",code:200,token:jwtToken}
+          }else {
+            that.ctx.body = {msg:"password is uncorrect",code:401}
+          }
+        }
+      ).catch()    
     }
   }
 }
