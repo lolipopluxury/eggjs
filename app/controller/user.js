@@ -8,16 +8,16 @@ const Controller = require('egg').Controller;
  */
 
 class UserController extends Controller {
-    /**
-   * @summary register
-   * @description quick register
-   * @router post /register
-   * @request formData string *email  
-   * @request formData string *username 
-   * @request formData string *password
-   * @request formData string *role
-   * @request formData string *_csrf   
-   */
+  /**
+  * @summary register
+  * @description quick register
+  * @router post /register
+  * @request formData string *email  
+  * @request formData string *username 
+  * @request formData string *password
+  * @request formData string *role
+  * @request formData string *_csrf   
+  */
   async register(){ 
     const para = this.ctx.request.body  
     const email = para.email
@@ -37,8 +37,7 @@ class UserController extends Controller {
     }  
   }
 
-  async login(){
-     /**
+   /**
    * @summary login
    * @description login with email
    * @router post /login
@@ -47,6 +46,7 @@ class UserController extends Controller {
    * @request formData string *_csrf  
    * @apikey Authorization
    */ 
+  async login(){   
     const para = this.ctx.request.body
     const findUser =  await this.service.user.findUser(para.email)
     if(findUser.length === 0) {
