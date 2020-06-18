@@ -1,7 +1,9 @@
 module.exports = (options,app) => {
   return async function interceptor(ctx,next) {
-    console.log('inter1')
-    console.log('inter2')
+    console.log('------------------')
+    console.log(ctx.request)
+    console.log(ctx.session.csrfToken)
+    console.log('******************')
     await next()
   }
 }
