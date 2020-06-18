@@ -16,7 +16,7 @@ class HomeController extends Controller {
    */
   async index() {
     const { ctx } = this;
-    console.log(ctx.state.user)
+    // console.log(ctx.state.user)
     ctx.body = 'hi, egg';
   }  
 }
