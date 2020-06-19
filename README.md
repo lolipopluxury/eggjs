@@ -65,3 +65,26 @@ In `consumes`, don't write an array, or it'll not work. Token in request header 
   */
 ```
 in code. `Authorization` means the name in header, usually it's called `Authorization`. For some servers, they check with bearer token, which means in `Authorization` it should be `Bearer ${token}` rather than `${token}`
+
+### CSRF
+In egg.js, there is already a plugin setted for csrf. It checks all post requests, and refuses the request without csrf token. When a user want to access the api, it should get a csrf token first, and put the token in form as `_csrf`.
+
+There are two ways to send the token. First one is putting in cookie and another one is in session. Concerning security, we can send by session.
+```
+config.security = {
+    csrf: {  
+      enable:true,
+      useSession: true,  
+      cookieName: 'csrfToken',
+      sessionName: 'csrfToken',
+    }
+  };
+```
+The token is read in this way
+```
+async getToken(){
+    const { ctx } = this;  
+    const token = ctx.session.csrfToken  
+    ctx.body = {msg:'token get',code:200,data:token};     
+  }
+```
