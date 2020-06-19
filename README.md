@@ -90,3 +90,42 @@ In `consumes`, don't write an array, or it'll not work. Token in request header 
 ```
 in code. `Authorization` means the name in header, usually it's called `Authorization`. For some servers, they check with bearer token, which means in `Authorization` it should be `Bearer ${token}` rather than `${token}`
 
+### RSA
+When we want to write data into database, we should consider about the safety of data. Database is at the risk of hacked, thus we'd like to encrypt the data. Here we can use rsa to protect the data. 
+
+`crypto` and `OpenSSL` are involved.
+
+Firstly, we need `OpenSSL` to generate the keys, which are private key and public key.
+
+`OpenSSL` is a open source project, you can find it on github. Also it has a website, but the website doesn't provide a package for windows. Installing introduction on github is a little bit trouble. For simple way, we can use a third part package in windows. 
+
+The link address is here `http://slproweb.com/products/Win32OpenSSL.html`. After OpenSSL is installed, we should add it into `PATH` to enable it. It looks like `C:/Program Files/OpenSSL-win64/bin`. Notice that it should be added in system dictionary, or you can not use the command in other places.
+
+By now, it should work. Use command line to generate key files.
+```
+$ openssl　version  //check whether openssl works
+$ openssl genrsa -out rsa_private_key.pem 1024  //generate private key
+$ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem  //generate public key based on private key
+```
+Put the key in `src`, which means at the same level with `app`. This is related to the fs module in node.js. 
+
+`fs.readFileSync()`goes through the root file. Thus when you write like `fs.readFileSync('./rsa_public_key.pem')`, the position is not where your controller or service is. It will throw an error, alarming no such file.
+
+After everything is prepared, we can use `crypto` to finish the encryption.
+```
+const fs = require('fs')
+const crypto = require('crypto')  //import crypto and fs module, fs module belongs to nodejs, dont need to install
+
+const privateKey = fs.readFileSync('./rsa_private_key.pem').toString('ascii')
+console.log(privateKey) 
+const publicKey = fs.readFileSync('./rsa_public_key.pem').toString('ascii')
+console.log(publicKey)  
+
+const encodeData = crypto.publicEncrypt(publicKey, Buffer.from('lolipop')).toString('base64');
+const decodeData = crypto.privateDecrypt(privateKey, Buffer.from(encodeData.toString('base64'), 'base64'));
+console.log("encode: ", encodeData)
+console.log('********************')
+console.log("decode: ", decodeData.toString())
+```
+### jwt
+
