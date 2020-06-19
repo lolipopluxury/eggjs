@@ -16,6 +16,30 @@ see [egg docs][egg] for more detail. Choose simple-temp for js. Ts is not recomm
 OpenSSL is required for RSA
 ## Notice
 
+### CSRF
+Thus some developers find the api dosen't work when sending a post request. The reason is that in egg.js, there is already a plugin setted for csrf. It checks all post requests, and refuses the request without csrf token by default. When a user want to access the api, it should get a csrf token first, and put the token in form as `_csrf`. Many answers on the internet tell how to disable the plugin, but few ones tell how to config in correct way.
+
+There are two ways to send the token. First one is putting in cookie and another one is in session. Concerning security, we can send by session.
+```
+config.security = {
+    csrf: {  
+      enable:true,
+      useSession: true,  
+      cookieName: 'csrfToken',
+      sessionName: 'csrfToken',
+    }
+  };
+```
+The token is read in this way
+```
+async getToken(){
+    const { ctx } = this;  
+    const token = ctx.session.csrfToken  
+    ctx.body = {msg:'token get',code:200,data:token};     
+  }
+```
+
+
 ### Swagger
 `egg-swagger-doc` is a plugin used for generating api docs. The basic way is working by documents in code like this:
 ```
@@ -66,25 +90,3 @@ In `consumes`, don't write an array, or it'll not work. Token in request header 
 ```
 in code. `Authorization` means the name in header, usually it's called `Authorization`. For some servers, they check with bearer token, which means in `Authorization` it should be `Bearer ${token}` rather than `${token}`
 
-### CSRF
-In egg.js, there is already a plugin setted for csrf. It checks all post requests, and refuses the request without csrf token. When a user want to access the api, it should get a csrf token first, and put the token in form as `_csrf`.
-
-There are two ways to send the token. First one is putting in cookie and another one is in session. Concerning security, we can send by session.
-```
-config.security = {
-    csrf: {  
-      enable:true,
-      useSession: true,  
-      cookieName: 'csrfToken',
-      sessionName: 'csrfToken',
-    }
-  };
-```
-The token is read in this way
-```
-async getToken(){
-    const { ctx } = this;  
-    const token = ctx.session.csrfToken  
-    ctx.body = {msg:'token get',code:200,data:token};     
-  }
-```
