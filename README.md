@@ -103,9 +103,14 @@ The link address is here `http://slproweb.com/products/Win32OpenSSL.html`. After
 
 By now, it should work. Use command line to generate key files.
 ```
-$ openssl　version  //check whether openssl works
-$ openssl genrsa -out rsa_private_key.pem 1024  //generate private key
-$ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem  //generate public key based on private key
+$ openssl　version  
+//check whether openssl works
+
+$ openssl genrsa -out rsa_private_key.pem 1024  
+//generate private key
+
+$ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem  
+//generate public key based on private key
 ```
 Put the key in `src`, which means at the same level with `app`. This is related to the fs module in node.js. 
 
@@ -114,7 +119,8 @@ Put the key in `src`, which means at the same level with `app`. This is related 
 After everything is prepared, we can use `crypto` to finish the encryption.
 ```
 const fs = require('fs')
-const crypto = require('crypto')  //import crypto and fs module, fs module belongs to nodejs, dont need to install
+const crypto = require('crypto')  
+//import crypto and fs module, fs module belongs to nodejs, dont need to install
 
 const privateKey = fs.readFileSync('./rsa_private_key.pem').toString('ascii')
 console.log(privateKey) 
