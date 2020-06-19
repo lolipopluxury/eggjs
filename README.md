@@ -54,8 +54,7 @@ config.swaggerdoc = {
     enable: true,
   };
 ```
-For first learners, two things may makes feel puzzled. First one is how to change the content type in request header, and the  second
-one is how to add token in request.
+For first learners, two things may make feel puzzled. First one is how to change the content type of request, and the second one is how to add token in request header.
 
 The answer is in `consumes` and `securityDefinitions`
 
@@ -65,4 +64,4 @@ In `consumes`, don't write an array, or it'll not work. Token in request header 
   * @apikey Authorization
   */
 ```
-in code. `Authorization` means the name in header, usually it's called `Authorization`. For some servers, they check with bearer token, which means in `Authorization` it should be ``Bearer ${token}`` rather than ``${token}``
+in code. `Authorization` means the name in header, usually it's called `Authorization`. For some servers, they check with bearer token, which means in `Authorization` it should be `Bearer ${token}` rather than `${token}`
