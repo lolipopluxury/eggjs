@@ -17,7 +17,7 @@ OpenSSL is required for RSA
 ## Notice
 
 ### CSRF
-Thus some developers find the api dosen't work when sending a post request. The reason is that in egg.js, there is already a plugin setted for csrf. It checks all post requests, and refuses the request without csrf token by default. When a user want to access the api, it should get a csrf token first, and put the token in form as `_csrf`. Many answers on the internet tell how to disable the plugin, but few ones tell how to config in correct way.
+Some developers find the api dosen't work when sending a post request. The reason is that in egg.js, there is already a plugin setted for csrf. It checks all post requests, and refuses the request without csrf token by default. When a user want to access the api, it should get a csrf token first, and put the token in form as `_csrf`. Many answers on the internet tell how to disable the plugin, but few ones tell how to config in correct way.
 
 There are two ways to send the token. First one is putting in cookie and another one is in session. Concerning security, we can send by session.
 ```
