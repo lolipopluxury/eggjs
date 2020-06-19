@@ -20,7 +20,7 @@ OpenSSL is required for RSA
 Some developers find the api dosen't work when sending a post request. The reason is that in egg.js, there is already a plugin setted for csrf. It checks all post requests, and refuses the request without csrf token by default. When a user want to access the api, it should get a csrf token first, and put the token in form as `_csrf`. Many answers on the internet tell how to disable the plugin, but few ones tell how to config in correct way.
 
 There are two ways to send the token. First one is putting in cookie and another one is in session. Concerning security, we can send by session.
-```
+```javascript
 config.security = {
     csrf: {  
       enable:true,
@@ -42,7 +42,7 @@ async getToken(){
 
 ### Swagger
 `egg-swagger-doc` is a plugin used for generating api docs. The basic way is working by documents in code like this:
-```
+```javascript
 /**
  *  @Controller index
  */
@@ -55,7 +55,7 @@ async getToken(){
    */
 ```
 Of course the plugin should config first
-```
+```javascript
 config.swaggerdoc = {
     dirScanner: './app/controller',
     apiInfo: {
@@ -83,7 +83,7 @@ For first learners, two things may make feel puzzled. First one is how to change
 The answer is in `consumes` and `securityDefinitions`
 
 In `consumes`, don't write an array, or it'll not work. Token in request header belongs to api key, and `securityDefinitions` enables it. Once you want an api checked, add 
-```
+```javascript
 /**   
   * @apikey Authorization
   */
@@ -102,7 +102,7 @@ Firstly, we need `OpenSSL` to generate the keys, which are private key and publi
 The link address is here `http://slproweb.com/products/Win32OpenSSL.html`. After OpenSSL is installed, we should add it into `PATH` to enable it. It looks like `C:/Program Files/OpenSSL-win64/bin`. Notice that it should be added in system dictionary, or you can not use the command in other places.
 
 By now, it should work. Use command line to generate key files.
-```
+```javascript
 $ openssl　version  
 //check whether openssl works
 
@@ -117,7 +117,7 @@ Put the key in `src`, which means at the same level with `app`. This is related 
 `fs.readFileSync()`goes through the root file. Thus when you write like `fs.readFileSync('./rsa_public_key.pem')`, the position is not where your controller or service is. It will throw an error, alarming no such file.
 
 After everything is prepared, we can use `crypto` to finish the encryption.
-```
+```javascript
 const fs = require('fs')
 const crypto = require('crypto')  
 //import crypto and fs module, fs module belongs to nodejs, dont need to install
@@ -137,7 +137,7 @@ console.log("decode: ", decodeData.toString())
 `egg-jwt` is used to generate token when users login. It's somehow used like a middleware.
 
 Generating token:
-```
+```javascript
 const jwtToken = that.app.jwt.sign(
   {    
   email: para.email,
@@ -147,7 +147,7 @@ const jwtToken = that.app.jwt.sign(
 ```
 
 Checking token
-```
+```javascript
 // ./app/router.js
 
 module.exports = app => {
