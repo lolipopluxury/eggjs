@@ -133,5 +133,25 @@ console.log("encode: ", encodeData)
 console.log('********************')
 console.log("decode: ", decodeData.toString())
 ```
-### jwt
+### JWT
+`egg-jwt` is used to generate token when users login. It's somehow used like a middleware.
 
+Generating token:
+```
+const jwtToken = that.app.jwt.sign(
+  {    
+  email: para.email,
+  role: findUser[0].role   
+  }, that.app.config.jwt.secret
+);
+```
+
+Checking token
+```
+// ./app/router.js
+
+module.exports = app => {
+  const { router, controller, jwt } = app; 
+  router.post('/login',jwt,controller.user.login)
+};
+```
