@@ -1,33 +1,19 @@
-# lolipop
-
-
+# Backend Based on Egg.js 
 
 ## QuickStart
-
-<!-- add docs here for user -->
-
-see [egg docs][egg] for more detail.
-
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
+see [egg docs][egg] for more detail. Choose simple-temp for js. Ts is not recommended in egg.
 
 [egg]: https://eggjs.org
+### Plugins 
+`egg-mongoose`
+`egg-cors`
+`egg-swagger-doc`
+`egg-jwt`
+### Dependency
+`crypto`
+`validator`
+
+OpenSSL is required for RSA
+## Notice
+
+### 
