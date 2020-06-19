@@ -55,9 +55,9 @@ class UserController extends Controller {
     if(findUser.length === 0) {
       this.ctx.body = {msg:"this user do not exsist",code:401}
     } else {
-      const encode = await this.service.user.encryption(para.password).then(
-        function(res){
-          if(res === findUser[0].password){
+      const decode = await this.service.user.decryption(findUser[0].password).then(
+        function(res){          
+          if(res === para.password){
             const jwtToken = that.app.jwt.sign({    
               email: para.email,
               role: findUser[0].role   

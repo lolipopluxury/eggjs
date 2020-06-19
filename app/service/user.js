@@ -3,6 +3,7 @@
 const user = require('../model/user');
 const Service = require('egg').Service;
 const crypto = require('crypto');
+const fs = require('fs')
 
 class UserService extends Service {
   async findUser(email){
@@ -31,11 +32,14 @@ class UserService extends Service {
     }
   }
   async encryption(decryptedCode) {
-    const salt = this.app.config.salt
-    const hashSecret = this.app.config.hashSecret
-    const preEncode = crypto.createHmac('sha256',hashSecret).update(decryptedCode).digest('hex')  
-    const encode = crypto.createHmac('sha512',hashSecret).update(`${salt}${preEncode}`).digest('hex')  
+    const publicKey = fs.readFileSync('./rsa_public_key.pem').toString('ascii')
+    const encode = crypto.publicEncrypt(publicKey, Buffer.from(decryptedCode)).toString('base64');
     return encode
+  }
+  async decryption(encryptedCode) {
+    const privateKey = fs.readFileSync('./rsa_private_key.pem').toString('ascii') 
+    const decode = crypto.privateDecrypt(privateKey, Buffer.from(encryptedCode.toString('base64'), 'base64')).toString();
+    return decode
   }
 }
 

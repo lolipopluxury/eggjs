@@ -133,6 +133,17 @@ console.log("encode: ", encodeData)
 console.log('********************')
 console.log("decode: ", decodeData.toString())
 ```
+
+By the way, this is the ASH method
+```javascript
+async encryption(decryptedCode) {
+    const salt = this.app.config.salt
+    const hashSecret = this.app.config.hashSecret
+    const preEncode = crypto.createHmac('sha256',hashSecret).update(decryptedCode).digest('hex')  
+    const encode = crypto.createHmac('sha512',hashSecret).update(`${salt}${preEncode}`).digest('hex') 
+    return encode
+  }
+```
 ### JWT
 `egg-jwt` is used to generate token when users login. It's somehow used like a middleware.
 

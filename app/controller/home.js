@@ -1,8 +1,6 @@
 'use strict';
 
 const Controller = require('egg').Controller;
-const fs = require('fs')
-const crypto = require('crypto')
 
 /**
  *  @Controller index
@@ -19,10 +17,8 @@ class HomeController extends Controller {
   async index() {
     const { ctx } = this;
     //fs.read go through in src rather than the controller's position
-    const privateKey = fs.readFileSync('./rsa_private_key.pem').toString('ascii')
-    console.log(privateKey) 
+    const privateKey = fs.readFileSync('./rsa_private_key.pem').toString('ascii') 
     const publicKey = fs.readFileSync('./rsa_public_key.pem').toString('ascii')
-    console.log(publicKey)  
 
     const encodeData = crypto.publicEncrypt(publicKey, Buffer.from('lolipop')).toString('base64');
     console.log("encode: ", encodeData)
