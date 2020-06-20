@@ -1,13 +1,12 @@
 module.exports = (options,app) => {
   return async function interceptor(ctx,next) {    
-    const csrfGet = ctx.state.user.csrfToken
-    console.log(csrfGet)
-    const _csrfToken = ctx.session.csrfToken
-    console.log(_csrfToken)
+    const csrfGet = ctx.state.user.csrfToken    
+    const _csrfToken = ctx.session.csrfToken    
     if(csrfGet === _csrfToken) {
-      await next()
+      await next()  
     }else {
-      ctx.body = 'no'
+      ctx.status = 403
+      ctx.body = {msg:'User identification fails'}
     }
   }
 }

@@ -27,13 +27,16 @@ class UserController extends Controller {
     if(validator.isEmail(email)){
       const res = await this.service.user.addUser(email,username,password,role)  
       if(res){
-        this.ctx.body = {msg:`user created successfully, username: ${username}`,code:200}
+        this.ctx.status = 201
+        this.ctx.body = {msg:`user created successfully, username: ${username}`}
       }
       else {
-        this.ctx.body = {msg:'this user has already existed',code:200}
+        this.ctx.status = 400
+        this.ctx.body = {msg:'this user has already existed'}
       }
     }else {
-      this.ctx.body = {msg:'Please input a avaliable email address',code:200}
+      this.ctx.status = 400
+      this.ctx.body = {msg:'Please input a avaliable email address'}
     }  
   }
 
@@ -53,7 +56,8 @@ class UserController extends Controller {
     const para = this.ctx.request.body
     const findUser =  await this.service.user.findUser(para.email)
     if(findUser.length === 0) {
-      this.ctx.body = {msg:"this user do not exsist",code:401}
+      this.ctx.status = 400
+      this.ctx.body = {msg:"this user do not exsist"}
     } else {
       const csrfToken = this.ctx.session.csrfToken 
       const decode = await this.service.user.decryption(findUser[0].password).then(
@@ -64,9 +68,11 @@ class UserController extends Controller {
               csrfToken:csrfToken,
               role: findUser[0].role   
              }, that.app.config.jwt.secret);
-             that.ctx.body = {msg:"login successfully",code:200,token:jwtToken}
+             this.ctx.status = 200
+             that.ctx.body = {msg:"login successfully",token:jwtToken}
           }else {
-            that.ctx.body = {msg:"password is uncorrect",code:401}
+            this.ctx.status = 401
+            that.ctx.body = {msg:"password is uncorrect"}
           }
         }
       ).catch()    

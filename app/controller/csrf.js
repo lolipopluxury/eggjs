@@ -16,7 +16,8 @@ class CsrfController extends Controller {
   async getToken(){
     const { ctx } = this;  
     const token = ctx.session.csrfToken  
-    ctx.body = {msg:'token get',code:200,data:token};     
+    ctx.status = 200
+    ctx.body = {msg:'token get',data:token};     
   }
 }
 
