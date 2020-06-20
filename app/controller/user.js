@@ -55,11 +55,13 @@ class UserController extends Controller {
     if(findUser.length === 0) {
       this.ctx.body = {msg:"this user do not exsist",code:401}
     } else {
+      const csrfToken = this.ctx.session.csrfToken 
       const decode = await this.service.user.decryption(findUser[0].password).then(
         function(res){          
           if(res === para.password){
             const jwtToken = that.app.jwt.sign({    
               email: para.email,
+              csrfToken:csrfToken,
               role: findUser[0].role   
              }, that.app.config.jwt.secret);
              that.ctx.body = {msg:"login successfully",code:200,token:jwtToken}
