@@ -18,7 +18,7 @@ class CsrfController extends Controller {
     const token = ctx.session.csrfToken  
     ctx.status = 200
     ctx.body = {msg:'token get',data:token};     
-  }
+  } 
 }
 
 module.exports = CsrfController;
