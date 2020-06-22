@@ -78,6 +78,13 @@ class UserController extends Controller {
       ).catch()    
     }
   }
+
+  async logout(){
+    const { ctx } = this
+    ctx.session = null
+    ctx.status = 200
+    ctx.body = {msg:'log out successfully'}
+  }
 }
 
 module.exports = UserController;
