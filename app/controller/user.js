@@ -79,6 +79,12 @@ class UserController extends Controller {
     }
   }
 
+  /**
+   * @summary Logout
+   * @description log out
+   * @router get /logout
+   * @apikey Authorization
+   */
   async logout(){
     const { ctx } = this
     ctx.session = null
