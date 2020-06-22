@@ -166,3 +166,6 @@ module.exports = app => {
   router.post('/login',jwt,controller.user.login)
 };
 ```
+
+### An interesting plugin -- Rainbow Fart
+
