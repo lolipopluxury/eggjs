@@ -41,7 +41,12 @@ module.exports = appInfo => {
 
   config.jwt = {
     secret: 'big feet'
-  }
+  };
+
+  config.session = {
+    key: "EGG_SESSION",
+    maxAge: 1 * 3600 * 1000,     
+    }
 
   config.swaggerdoc = {
     dirScanner: './app/controller',
