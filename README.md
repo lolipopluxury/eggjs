@@ -102,7 +102,7 @@ Firstly, we need `OpenSSL` to generate the keys, which are private key and publi
 The link address is here `http://slproweb.com/products/Win32OpenSSL.html`. After OpenSSL is installed, we should add it into `PATH` to enable it. It looks like `C:/Program Files/OpenSSL-win64/bin`. Notice that it should be added in system dictionary, or you can not use the command in other places.
 
 By now, it should work. Use command line to generate key files.
-```javascript
+```
 $ openssl　version  
 //check whether openssl works
 
