@@ -1,6 +1,7 @@
 'use strict';
 
 const user = require('../model/user');
+const userSetting = require('../model/userSetting')
 const Service = require('egg').Service;
 const crypto = require('crypto');
 const fs = require('fs')
@@ -22,7 +23,13 @@ class UserService extends Service {
             password:res,
             role:role
           })
-          user.save()          
+          user.save()
+          const userSetting = new that.ctx.model.UserSetting({
+            email:email,
+            avatar: 'default',
+            details:'default details'
+          })
+          userSetting.save()          
         }        
       ).catch()
       return true 
