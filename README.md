@@ -48,7 +48,49 @@ config.mongoose = {
     }  
   };
 ```
-Here we should notice the option.
+Here we should notice the option. It equals the `set` in mongoose. Like here, if we want to use `findOneAndUpdate`, we should diable `findAndModify` firstly. And it should be written in `option`. After that, the operation is almost the same in mongoose.
+
+Set up model and build schema first.
+```javascript
+module.exports = app => {
+  const mongoose = app.mongoose;
+  const Schema = mongoose.Schema;
+  const UserSchema = new Schema({
+    email: {
+      type:String,
+    },
+    username: {
+      type:String,
+    },
+    password: {
+      type:String,
+    },
+    role: {
+      type:String,
+    }
+  });
+  return mongoose.model('User',UserSchema,'user')
+};
+```
+And then, operate the database with schema in service.
+```javascript
+async findUser(email){
+    const result = await this.ctx.model.User.find({"email":email});
+    return result
+  }
+
+async update(email,avatar,details){
+    const result = await this.ctx.model.UserSetting.findOneAndUpdate(
+      {"email":email},{"avatar":avatar,"details":details}
+    ).then(
+      this.ctx.status = 201,
+      this.ctx.body = {msg:'modified'}
+    ).catch(
+      this.ctx.status = 401,
+      this.ctx.body = {msg:'error'}
+    )
+  }
+```
 
 ### Swagger
 `egg-swagger-doc` is a plugin used for generating api docs. The basic way is working by documents in code like this:
