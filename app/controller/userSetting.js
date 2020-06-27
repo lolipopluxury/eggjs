@@ -22,9 +22,9 @@ class UserSettingController extends Controller {
     const details = JSON.parse(para.data)   
     const res = this.service.userSetting.update(details.email,details.avatar,details.details)
 
-    ctx.body = {
-      data : 1
-    }
+    // ctx.body = {
+    //   data : 1
+    // }
   }
 }
 
