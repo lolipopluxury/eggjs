@@ -38,7 +38,17 @@ async getToken(){
     ctx.body = {msg:'token get',code:200,data:token};     
   }
 ```
-
+### mongoose
+In egg.js, there is a plugin called egg-mongoose. We can use it to operate the database when mongoBD used in the project. First, we should config to enbale it.
+```javascript
+config.mongoose = {    
+    client: {      
+      url: 'mongodb://localhost:27017/eggjs',
+      options: {useFindAndModify: false,}
+    }  
+  };
+```
+Here we should notice the option.
 
 ### Swagger
 `egg-swagger-doc` is a plugin used for generating api docs. The basic way is working by documents in code like this:
