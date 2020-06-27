@@ -23,7 +23,7 @@ class UserSettingController extends Controller {
     const res = this.service.userSetting.update(details.email,details.avatar,details.details)
 
     ctx.body = {
-      data : dedata
+      data : 1
     }
   }
 }

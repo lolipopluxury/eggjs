@@ -32,10 +32,10 @@ module.exports = appInfo => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
 
-  config.mongoose = {
-    client: {
+  config.mongoose = {    
+    client: {      
       url: 'mongodb://localhost:27017/eggjs',
-      options: {}
+      options: {useFindAndModify: false,}
     }  
   };
 
