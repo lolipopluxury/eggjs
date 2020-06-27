@@ -12,5 +12,6 @@ module.exports = app => {
   router.post('/encryption',controller.home.encryption);
   router.post('/decryption',controller.home.decryption);
   router.post('/register',controller.user.register);
-  router.post('/login',controller.user.login)
+  router.post('/login',controller.user.login);
+  router.post('/setting',controller.userSetting.update);
 };

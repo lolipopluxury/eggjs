@@ -2,9 +2,10 @@
 
 const Service = require('egg').Service;
 
-class UserSettingService extends Service {
+class UserSettingService extends Service { 
+
   async update(){
-    return 
+    return  
   }
 }
 
