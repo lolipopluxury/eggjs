@@ -48,7 +48,7 @@ config.mongoose = {
     }  
   };
 ```
-Here we should notice the option. It equals the `set` in mongoose. Like here, if we want to use `findOneAndUpdate`, we should diable `findAndModify` firstly. And it should be written in `option`. After that, the operation is almost the same in mongoose.
+Here we should notice the `option`. It equals the `set` in mongoose. Like here, if we want to use `findOneAndUpdate`, we should disable `findAndModify` firstly. And it should be written in `option`. After that, the operation is almost the same in mongoose.
 
 Set up model and build schema first.
 ```javascript
