@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 
 class UserSettingService extends Service { 
 
-  async createDefault(){
+  async update(avatar,details){
     return  
   }
 }

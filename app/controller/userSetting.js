@@ -18,9 +18,10 @@ class UserSettingController extends Controller {
 
   async update(){
     const { ctx } = this;
-    const para = ctx.request.body
-    const data = para.data
-    const dedata = JSON.parse(data)   
+    const para = ctx.request.body    
+    const details = JSON.parse(para.data)   
+    const res = this.service.userSetting.update(details.email,details.avatar,details.details)
+
     ctx.body = {
       data : dedata
     }
