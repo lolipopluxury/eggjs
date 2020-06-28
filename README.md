@@ -235,7 +235,7 @@ TF should be written in service, like
 'use strict';
 
 const Service = require('egg').Service;
-const tf = require('@tensorflow/tfjs')  // import * as tf from '@tensorflow/tfjs';
+const tf = require('@tensorflow/tfjs')  // import * as tf from '@tensorflow/tfjs' in egg syntx
 
 class IndexService extends Service {
   async index(){
