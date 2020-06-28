@@ -16,15 +16,17 @@ class UserSettingController extends Controller {
    * @request formData string *_csrf     
    */ 
 
-  async update(){
-    const { ctx } = this;
-    const para = ctx.request.body    
+  async update(){  
+    const para = this.ctx.request.body    
     const details = JSON.parse(para.data)   
-    const res = this.service.userSetting.update(details.email,details.avatar,details.details)
-
-    // ctx.body = {
-    //   data : 1
-    // }
+    const res = await this.service.userSetting.update(details.email,details.avatar,details.details).then(     
+      (res) => {              
+        this.ctx.status = 200
+        this.ctx.body = {msg:"update successfully"}
+      }).catch((err) => {      
+        this.ctx.status = 400
+        this.ctx.body = {msg:err}
+    })
   }
 }
 
