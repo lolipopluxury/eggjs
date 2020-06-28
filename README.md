@@ -219,5 +219,39 @@ module.exports = app => {
 };
 ```
 
+### TensorFlow
+TensorFlow can be used in egg. There is a javascript version called `tensorflow.js`
+```
+$ npm install @tensorflow/tfjs
+
+or
+
+$ yarn add @tensorflow/tfjs
+```
+There are three options, which are `@tensorflow/tfjs`, `@tensorflow/tfjs-node` and `@tensorflow/tfjs-node-gpu`. `@tensorflow/tfjs` is pure javascript, and it is the slowest one. `@tensorflow/tfjs-node` involves c++, and `@tensorflow/tfjs-node-gpu` needs `NVIDIA®GPU`.
+
+TF should be written in service, like
+```javascript
+'use strict';
+
+const Service = require('egg').Service;
+const tf = require('@tensorflow/tfjs')  // import * as tf from '@tensorflow/tfjs';
+
+class IndexService extends Service {
+  async index(){
+    const model = tf.sequential();
+    model.add(tf.layers.dense({units: 1, inputShape: [1]}));
+    model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});    
+    const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]);
+    const ys = tf.tensor2d([1, 3, 5, 7], [4, 1]);    
+    model.fit(xs, ys, {epochs: 10}).then(() => {      
+      model.predict(tf.tensor2d([5], [1, 1])).print();      
+    });
+  }
+}
+
+module.exports = IndexService;
+```
+
 ### An interesting plugin -- Rainbow Fart
 
