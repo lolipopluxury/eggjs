@@ -7,7 +7,6 @@ const Controller = require('egg').Controller;
  */
 
 class UserSettingController extends Controller {
-
    /**
    * @summary setting
    * @description login with email
@@ -15,7 +14,6 @@ class UserSettingController extends Controller {
    * @request formData string *data   
    * @request formData string *_csrf     
    */ 
-
   async update(){  
     const para = this.ctx.request.body    
     const details = JSON.parse(para.data)   

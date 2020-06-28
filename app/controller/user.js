@@ -69,10 +69,10 @@ class UserController extends Controller {
               role: findUser[0].role   
              }, that.app.config.jwt.secret);
              this.ctx.status = 200
-             that.ctx.body = {msg:"login successfully",token:jwtToken}
+             this.ctx.body = {msg:"login successfully",token:jwtToken}
           }else {
             this.ctx.status = 401
-            that.ctx.body = {msg:"password is uncorrect"}
+            this.ctx.body = {msg:"password is uncorrect"}
           }
         }
       ).catch()    
