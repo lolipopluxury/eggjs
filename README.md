@@ -252,6 +252,8 @@ class IndexService extends Service {
 
 module.exports = IndexService;
 ```
+### Model
+When using model in egg must use as `this.ctx.model.XXXX`, `const XXXX = require()` only means importing, cannt be used directly 
 
 ### An interesting plugin -- Rainbow Fart
 
