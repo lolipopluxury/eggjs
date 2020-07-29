@@ -44,15 +44,15 @@ class UserController extends Controller {
       }  
     }else {
       this.ctx.status = 400
-        this.ctx.body = {msg:'Please input a avaliable role'}
+      this.ctx.body = {msg:'Please input a avaliable role'}
     }  
   }
 
    /**
    * @summary login
-   * @description login with email
+   * @description login with phonenumber
    * @router post /login
-   * @request formData string *email 
+   * @request formData string *phonenumber 
    * @request formData string *password
    * @request formData string *_csrf  
    * @apikey Authorization
@@ -62,7 +62,7 @@ class UserController extends Controller {
   async login(){   
     const that = this
     const para = this.ctx.request.body
-    const findUser =  await this.service.user.findUser(para.email)
+    const findUser =  await this.service.user.findUser(para.phonenumber)
     if(findUser.length === 0) {
       this.ctx.status = 400
       this.ctx.body = {msg:"this user do not exsist"}
