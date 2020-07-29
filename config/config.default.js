@@ -18,6 +18,10 @@ module.exports = appInfo => {
   // add global middleware config here
   config.middleware = [];
 
+  config.roles = ['admin','customer-service',
+    'doctor','seller','distributor',
+    'user','silver-vip','golden-vip','platinum-vip'];
+
   config.security = {
     csrf: {  
       enable:true,

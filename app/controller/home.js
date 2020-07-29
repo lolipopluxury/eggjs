@@ -6,17 +6,19 @@ const Controller = require('egg').Controller;
  *  @Controller index
  */
 
+// * @apikey Authorization
 class HomeController extends Controller {
   /**
    * @summary Function_Test
    * @description test
    * @router get /
-   * @apikey Authorization
+   
    */
   async index() {
     const { ctx } = this;
-    // console.log(ctx.state.user)
-    ctx.body = 'hi, egg';
+    const res = this.config.roles
+    ctx.body = res
+    ctx.status = 200
   }  
   /**
    * @summary Encryption
