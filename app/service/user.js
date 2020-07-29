@@ -4,25 +4,25 @@ const user = require('../model/user');
 const userSetting = require('../model/userSetting')
 const Service = require('egg').Service;
 class UserService extends Service {
-  async findUser(email){
-    const result = await this.ctx.model.User.find({"email":email});
+  async findUser(phonenumber){
+    const result = await this.ctx.model.User.find({"phonenumber":phonenumber});
     return result
   }
-  async addUser(email,username,password,role) {    
-    const res = await this.findUser(email)
+  async addUser(phonenumber,username,password,role) {    
+    const res = await this.findUser(phonenumber)
     const that = this
     if(res.length === 0){      
       const encode = this.service.encryption.encryption(password).then(
         function(res){
           const user = new that.ctx.model.User({
-            email:email,
+            phonenumber:phonenumber,
             username:username,
             password:res,
             role:role
           })
           user.save()
           const userSetting = new that.ctx.model.UserSetting({
-            email:email,
+            phonenumber:phonenumber,
             avatar: 'default',
             details:'default details'
           })

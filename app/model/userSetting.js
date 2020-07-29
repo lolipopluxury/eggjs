@@ -2,7 +2,7 @@ module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
   const UserSettingSchema = new Schema({
-    email: {
+    phonenumber: {
       type:String,
     },
     avatar: {

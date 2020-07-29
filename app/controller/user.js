@@ -12,7 +12,7 @@ class UserController extends Controller {
   * @summary register
   * @description quick register
   * @router post /register
-  * @request formData string *email  
+  * @request formData string *phonenumber  
   * @request formData string *username 
   * @request formData string *password
   * @request formData string *role
@@ -20,16 +20,16 @@ class UserController extends Controller {
   */
   async register(){ 
     const para = this.ctx.request.body  
-    const email = para.email
+    const phonenumber = para.phonenumber
     const username = para.username
     const password = para.password
     const role = para.role
     const isRoles = this.config.roles.some(function(value){
       return value === role
-    })  
+    })   
     if(isRoles){
-      if(validator.isEmail(email)){
-        const res = await this.service.user.addUser(email,username,password,role)  
+      if(validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})){
+        const res = await this.service.user.addUser(phonenumber,username,password,role)  
         if(res){
           this.ctx.status = 201
           this.ctx.body = {msg:`user created successfully, username: ${username}`}
@@ -40,7 +40,7 @@ class UserController extends Controller {
         }
       }else {
         this.ctx.status = 400
-        this.ctx.body = {msg:'Please input a avaliable email address'}
+        this.ctx.body = {msg:'Please input a avaliable phonenumber'}
       }  
     }else {
       this.ctx.status = 400

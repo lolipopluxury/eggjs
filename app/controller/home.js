@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const validator = require('validator');
 
 /**
  *  @Controller index
@@ -12,19 +13,19 @@ class HomeController extends Controller {
    * @summary Function_Test
    * @description test
    * @router post /
-   * @request formData string *role
+   * @request formData string *phonenumber
    * @request formData string *_csrf
    */
  
   async index() {     
     const para = this.ctx.request.body  
-    const role = para.role  
-    // console.log(this.setrole(role));
-    const isRoles = this.config.roles.some(function(value, index, array){
-      return value === role
-    })
-    console.log(isRoles);    
-    this.ctx.body = this.setrole(role)
+    const phonenumber = para.phonenumber
+    const res = validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})
+    
+    // const isRoles = this.config.roles.some(function(value, index, array){
+    //   return value === role
+    // })    
+    this.ctx.body = res
     this.ctx.status = 200
     
   }  
