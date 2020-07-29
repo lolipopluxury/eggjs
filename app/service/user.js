@@ -3,8 +3,6 @@
 const user = require('../model/user');
 const userSetting = require('../model/userSetting')
 const Service = require('egg').Service;
-const crypto = require('crypto');
-const fs = require('fs')
 
 class UserService extends Service {
   async findUser(email){
@@ -15,7 +13,7 @@ class UserService extends Service {
     const res = await this.findUser(email)
     const that = this
     if(res.length === 0){      
-      const encode = this.encryption(password).then(
+      const encode = this.service.encryption.encryption(password).then(
         function(res){
           const user = new that.ctx.model.User({
             email:email,
@@ -37,17 +35,7 @@ class UserService extends Service {
     else{
       return false    
     }
-  }
-  async encryption(decryptedCode) {
-    const publicKey = fs.readFileSync('./rsa_public_key.pem').toString('ascii')
-    const encode = crypto.publicEncrypt(publicKey, Buffer.from(decryptedCode)).toString('base64');
-    return encode
-  }
-  async decryption(encryptedCode) {
-    const privateKey = fs.readFileSync('./rsa_private_key.pem').toString('ascii') 
-    const decode = crypto.privateDecrypt(privateKey, Buffer.from(encryptedCode.toString('base64'), 'base64')).toString();
-    return decode
-  }
+  } 
 }
 
 module.exports = UserService;

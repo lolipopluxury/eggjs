@@ -24,6 +24,7 @@ class UserController extends Controller {
     const username = para.username
     const password = para.password
     const role = para.role  
+    const _role = ['admin','customer-service','doctor','seller','distributor'] 
     if(validator.isEmail(email)){
       const res = await this.service.user.addUser(email,username,password,role)  
       if(res){

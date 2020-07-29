@@ -29,9 +29,10 @@ class HomeController extends Controller {
     const { ctx } = this;
     const para = ctx.request.body
     const code = para.code
-    const result = await this.service.user.encryption(code).then(
+    const result = await this.service.encryption.encryption(code).then(
       function(res) {
         ctx.body = res;
+        ctx.status = 200
       }
     )
   } 
@@ -46,9 +47,10 @@ class HomeController extends Controller {
     const { ctx } = this;
     const para = ctx.request.body
     const code = para.code
-    const result = await this.service.user.decryption(code).then(
-      function(res) {
+    const result = await this.service.encryption.decryption(code).then(
+      function(res) {  
         ctx.body = res;
+        ctx.status = 200
       }
     )
   } 
