@@ -23,21 +23,28 @@ class UserController extends Controller {
     const email = para.email
     const username = para.username
     const password = para.password
-    const role = para.role  
-    const _role = ['admin','customer-service','doctor','seller','distributor'] 
-    if(validator.isEmail(email)){
-      const res = await this.service.user.addUser(email,username,password,role)  
-      if(res){
-        this.ctx.status = 201
-        this.ctx.body = {msg:`user created successfully, username: ${username}`}
-      }
-      else {
+    const role = para.role
+    const isRoles = this.config.roles.some(function(value){
+      return value === role
+    })  
+    if(isRoles){
+      if(validator.isEmail(email)){
+        const res = await this.service.user.addUser(email,username,password,role)  
+        if(res){
+          this.ctx.status = 201
+          this.ctx.body = {msg:`user created successfully, username: ${username}`}
+        }
+        else {
+          this.ctx.status = 400
+          this.ctx.body = {msg:'this user has already existed'}
+        }
+      }else {
         this.ctx.status = 400
-        this.ctx.body = {msg:'this user has already existed'}
-      }
+        this.ctx.body = {msg:'Please input a avaliable email address'}
+      }  
     }else {
       this.ctx.status = 400
-      this.ctx.body = {msg:'Please input a avaliable email address'}
+        this.ctx.body = {msg:'Please input a avaliable role'}
     }  
   }
 

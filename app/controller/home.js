@@ -11,14 +11,22 @@ class HomeController extends Controller {
   /**
    * @summary Function_Test
    * @description test
-   * @router get /
-   
+   * @router post /
+   * @request formData string *role
+   * @request formData string *_csrf
    */
-  async index() {
-    const { ctx } = this;
-    const res = this.config.roles
-    ctx.body = res
-    ctx.status = 200
+ 
+  async index() {     
+    const para = this.ctx.request.body  
+    const role = para.role  
+    // console.log(this.setrole(role));
+    const isRoles = this.config.roles.some(function(value, index, array){
+      return value === role
+    })
+    console.log(isRoles);    
+    this.ctx.body = this.setrole(role)
+    this.ctx.status = 200
+    
   }  
   /**
    * @summary Encryption

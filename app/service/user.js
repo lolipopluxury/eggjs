@@ -3,7 +3,6 @@
 const user = require('../model/user');
 const userSetting = require('../model/userSetting')
 const Service = require('egg').Service;
-
 class UserService extends Service {
   async findUser(email){
     const result = await this.ctx.model.User.find({"email":email});
