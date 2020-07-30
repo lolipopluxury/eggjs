@@ -43,6 +43,12 @@ module.exports = appInfo => {
     }  
   };
 
+  config.redis = {
+    client: {
+      
+    }
+  }
+
   config.jwt = {
     secret: 'big feet'
   };
