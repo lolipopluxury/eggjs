@@ -69,45 +69,15 @@ class UserController extends Controller {
             that.ctx.body = {msg:'the captcha is unavaliable'}
           }
         }
-      )
-      
+      )      
+    }else {
+      this.ctx.status = 400
+      this.ctx.body = {msg:'Please input a role avaliable'}
     }
   }
-  // async register(){  
-  //   const para = this.ctx.request.body 
-  //   const that = this  
-  //   const isRoles = this.config.roles.some(function(value){
-  //     return value === para.role
-  //   })   
-  //   if(isRoles){
-  //     const user_temp = this.app.redis.get(para.phonenumber).then(
-  //       async function(res){
-  //         if(res){
-  //           
-            
-            // if(para.captcha === res.captcha){
-            //   const addUser = await that.ctx.service.user.addUser(phonenumber,role)
-            //   if(addUser){
-            //     that.ctx.status = 201
-            //     that.ctx.body = {msg:`user created successfully, account is: ${phonenumber}`}
-            //   }
-            //   else {
-            //     that.ctx.status = 400
-            //     that.ctx.body = {msg:'this user has already existed'}
-            //   }
-            // }
-  //         }else{
-  //           that.ctx.status = 400
-  //           that.ctx.body = {msg:'the captcha is unavaliable'}
-  //         }
-  //       }
-  //     ) 
-  //   }else {
-  //     this.ctx.status = 400
-  //     this.ctx.body = {msg:'Please input a role avaliable'}
-  //   }  
-  // }
-
+ 
+  //*********************************************************************************** */
+  //register with account and password */
   // async register(){ 
   //   const para = this.ctx.request.body  
   //   const phonenumber = para.phonenumber
@@ -137,6 +107,7 @@ class UserController extends Controller {
   //     this.ctx.body = {msg:'Please input a avaliable role'}
   //   }  
   // }
+  //************************************************************************************ */
 
    /**
    * @summary login
