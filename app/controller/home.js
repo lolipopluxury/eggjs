@@ -12,22 +12,14 @@ class HomeController extends Controller {
   /**
    * @summary Function_Test
    * @description test
-   * @router post /
-   * @request formData string *phonenumber
-   * @request formData string *_csrf
+   * @router get /
+   
    */
  
   async index() {     
-    const para = this.ctx.request.body  
-    const phonenumber = para.phonenumber
-    const res = validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})
-    
-    // const isRoles = this.config.roles.some(function(value, index, array){
-    //   return value === role
-    // })    
-    this.ctx.body = res
+    this.app.redis.set('user',123) 
     this.ctx.status = 200
-    
+    this.ctx.body = "ok"   
   }  
   /**
    * @summary Encryption
