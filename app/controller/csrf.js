@@ -8,7 +8,7 @@ const Controller = require('egg').Controller;
 
 class CsrfController extends Controller {
   /**
-   * @summary register
+   * @summary csrf token
    * @description get csrf token for post request
    * @router get /token      
    */

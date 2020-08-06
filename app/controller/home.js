@@ -12,15 +12,33 @@ class HomeController extends Controller {
   /**
    * @summary Function_Test
    * @description test
-   * @router get /
-   
+   * @router post /
+   * @request formData string *phone
+   * @request formData string *_csrf
    */
  
-  async index() {     
-    this.app.redis.set('user',123) 
+  async index() {
+    const para = this.ctx.request.body    
+    await this.app.redis.set(para.phone,"captcha:123") 
     this.ctx.status = 200
     this.ctx.body = "ok"   
   }  
+
+  /**
+   * @summary redis
+   * @description get redis
+   * @router post /redis
+   * @request formData string *phone
+   * @request formData string *_csrf
+   */
+ 
+  async redis() {
+    const para = this.ctx.request.body
+    const redis = await this.app.redis.get(para.phone) 
+    this.ctx.status = 200
+    this.ctx.body = redis   
+  }  
+
   /**
    * @summary Encryption
    * @description test
