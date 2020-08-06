@@ -4,10 +4,7 @@ module.exports = app => {
   const UserSchema = new Schema({
     phonenumber: {
       type:String,
-    },
-    username: {
-      type:String,
-    },
+    }, 
     password: {
       type:String,
     },

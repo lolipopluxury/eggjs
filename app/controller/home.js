@@ -12,16 +12,18 @@ class HomeController extends Controller {
   /**
    * @summary Function_Test
    * @description test
-   * @router post /
-   * @request formData string *phone
-   * @request formData string *_csrf
+   * @router get /
+   
    */
  
   async index() {
-    const para = this.ctx.request.body    
-    await this.app.redis.set(para.phone,"captcha:123") 
+    // const para = this.ctx.request.body    
+    // await this.app.redis.set(para.phone,"captcha:123") 
+    // this.ctx.status = 200
+    // this.ctx.body = "ok"   
+    const code = await this.ctx.service.captcha.generate()
     this.ctx.status = 200
-    this.ctx.body = "ok"   
+    this.ctx.body = code
   }  
 
   /**
@@ -34,9 +36,24 @@ class HomeController extends Controller {
  
   async redis() {
     const para = this.ctx.request.body
-    const redis = await this.app.redis.get(para.phone) 
-    this.ctx.status = 200
-    this.ctx.body = redis   
+    const that = this
+    const redis = await this.app.redis.get(para.phone).then(
+      function(res){
+        if(res){
+          that.ctx.body = res
+        }else{
+          that.ctx.body = "no"
+        }  
+      }
+    )
+    // if(redis === "nil"){
+    //   // this.ctx.status = 204
+    //   this.ctx.body = "no" 
+    // }else {
+    //   this.ctx.status = 200
+    //   this.ctx.body = redis   
+    // }
+    
   }  
 
   /**

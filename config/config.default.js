@@ -21,6 +21,8 @@ module.exports = appInfo => {
   config.roles = ['admin','customer-service',
     'doctor','seller','distributor',
     'user','silver-vip','golden-vip','platinum-vip'];
+  
+  config.inital_password = 'xfsd2020';
 
   config.security = {
     csrf: {  
