@@ -52,7 +52,7 @@ class UserController extends Controller {
       function(value){return value === para.role}
     )
     if(isRoles){
-      const user_temp = await this.app.redis.get(para.phonenumber).then(
+        await this.app.redis.get(para.phonenumber).then(
         async function(res){
           const user_temp_ob = JSON.parse(res) 
           if(user_temp_ob == null){
@@ -81,39 +81,6 @@ class UserController extends Controller {
       this.ctx.body = {msg:'Please input a role avaliable'}
     }
   }
- 
-  //*********************************************************************************** */
-  //register with account and password */
-  // async register(){ 
-  //   const para = this.ctx.request.body  
-  //   const phonenumber = para.phonenumber
-  //   const username = para.username
-  //   const password = para.password
-  //   const role = para.role
-  //   const isRoles = this.config.roles.some(function(value){
-  //     return value === role
-  //   })   
-  //   if(isRoles){
-  //     if(validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})){
-  //       const res = await this.service.user.addUser(phonenumber,username,password,role)  
-  //       if(res){
-  //         this.ctx.status = 201
-  //         this.ctx.body = {msg:`user created successfully, username: ${username}`}
-  //       }
-  //       else {
-  //         this.ctx.status = 400
-  //         this.ctx.body = {msg:'this user has already existed'}
-  //       }
-  //     }else {
-  //       this.ctx.status = 400
-  //       this.ctx.body = {msg:'Please input a avaliable phonenumber'}
-  //     }  
-  //   }else {
-  //     this.ctx.status = 400
-  //     this.ctx.body = {msg:'Please input a avaliable role'}
-  //   }  
-  // }
-  //************************************************************************************ */
 
    /**
    * @summary login
