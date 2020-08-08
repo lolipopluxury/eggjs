@@ -24,7 +24,8 @@ class UserController extends Controller {
     if(validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})){
       const captcha = await this.ctx.service.captcha.generate()
       await this.app.redis.set(phonenumber,`{"captcha":"${captcha}"}`).then(
-        function(res){
+        async function(res){
+          await that.app.redis.expire(phonenumber,120)
           that.ctx.status = 200
           that.ctx.body = {msg:'ok',captcha:captcha}
         }
