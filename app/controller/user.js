@@ -27,7 +27,7 @@ class UserController extends Controller {
         async function(res){
           await that.app.redis.expire(phonenumber,120)
           that.ctx.status = 200
-          that.ctx.body = {msg:'ok',captcha:captcha}
+          that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:captcha}
         }
       )
     }else {
@@ -54,21 +54,26 @@ class UserController extends Controller {
     if(isRoles){
       const user_temp = await this.app.redis.get(para.phonenumber).then(
         async function(res){
-          const user_temp_ob = JSON.parse(res)          
-          if(para.captcha === user_temp_ob.captcha){
-            const addUser = await that.ctx.service.user.addUser(para.phonenumber,para.role)
-            if(addUser){
-              that.ctx.status = 201
-              that.ctx.body = {msg:`user created successfully, account is: ${para.phonenumber}`}
-            }
-            else {
-              that.ctx.status = 400
-              that.ctx.body = {msg:'this user has already existed'}
-            }
-          }else {
+          const user_temp_ob = JSON.parse(res) 
+          if(user_temp_ob == null){
             that.ctx.status = 400
-            that.ctx.body = {msg:'the captcha is unavaliable'}
-          }
+            that.ctx.body = {msg:'the captcha has expired already'}
+          }else {
+            if(para.captcha === user_temp_ob.captcha){
+              const addUser = await that.ctx.service.user.addUser(para.phonenumber,para.role)
+              if(addUser){
+                that.ctx.status = 201
+                that.ctx.body = {msg:`user created successfully, account is: ${para.phonenumber}`}
+              }
+              else {
+                that.ctx.status = 400
+                that.ctx.body = {msg:'this user has already existed'}
+              }
+            }else {
+              that.ctx.status = 400
+              that.ctx.body = {msg:'the captcha is unavaliable'}
+            }
+          }          
         }
       )      
     }else {
