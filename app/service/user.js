@@ -15,7 +15,7 @@ class UserService extends Service {
     const that = this
     if(res.length === 0){      
       const encode = this.service.encryption.encryption(password).then(
-        function(res){
+        (res) =>{
           const user = new that.ctx.model.User({
             phonenumber:phonenumber,            
             password:res,

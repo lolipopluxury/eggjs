@@ -9,7 +9,7 @@ const Controller = require('egg').Controller;
  */
 
 class UserController extends Controller {
-    /**
+  /**
   * @summary getCaptcha
   * @description get captcha
   * @router post /getcaptcha
@@ -24,7 +24,7 @@ class UserController extends Controller {
     if(validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})){
       const captcha = await this.ctx.service.captcha.generate()
       await this.app.redis.set(phonenumber,`{"captcha":"${captcha}"}`).then(
-        async function(res){
+        async (res) => {
           await that.app.redis.expire(phonenumber,120)
           that.ctx.status = 200
           that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:captcha}
@@ -49,11 +49,11 @@ class UserController extends Controller {
     const para = this.ctx.request.body
     const that = this
     const isRoles = this.config.roles.some(
-      function(value){return value === para.role}
+      (value) => {return value === para.role}
     )
     if(isRoles){
         await this.app.redis.get(para.phonenumber).then(
-        async function(res){
+        async (res) => {
           const user_temp_ob = JSON.parse(res) 
           if(user_temp_ob == null){
             that.ctx.status = 400
@@ -103,7 +103,7 @@ class UserController extends Controller {
     } else {
       const csrfToken = this.ctx.session.csrfToken 
       const decode = await this.service.user.decryption(findUser[0].password).then(
-        function(res){          
+        (res) => {          
           if(res === para.password){
             const jwtToken = that.app.jwt.sign({    
               email: para.email,
