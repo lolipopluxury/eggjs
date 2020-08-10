@@ -12,8 +12,7 @@ class HomeController extends Controller {
   /**
    * @summary Function_Test
    * @description test
-   * @router get /
-   
+   * @router get /   
    */
  
   async index() {
@@ -24,7 +23,7 @@ class HomeController extends Controller {
     const code = await this.ctx.service.captcha.generate()
     this.ctx.status = 200
     this.ctx.body = code
-  }  
+  }
 
   /**
    * @summary redis
@@ -43,17 +42,9 @@ class HomeController extends Controller {
           that.ctx.body = res
         }else{
           that.ctx.body = "no"
-        }  
+        }
       }
     )
-    // if(redis === "nil"){
-    //   // this.ctx.status = 204
-    //   this.ctx.body = "no" 
-    // }else {
-    //   this.ctx.status = 200
-    //   this.ctx.body = redis   
-    // }
-    
   }  
 
   /**
@@ -73,7 +64,7 @@ class HomeController extends Controller {
         ctx.status = 200
       }
     )
-  } 
+  }
   /**
    * @summary Decryption
    * @description test
@@ -91,7 +82,7 @@ class HomeController extends Controller {
         ctx.status = 200
       }
     )
-  } 
+  }
 }
 
 module.exports = HomeController;

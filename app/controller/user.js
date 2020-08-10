@@ -20,16 +20,28 @@ class UserController extends Controller {
   async getCaptcha(){    
     const para = this.ctx.request.body      
     const phonenumber = para.phonenumber
-    const that = this
+    const that = this    
     if(validator.isMobilePhone(phonenumber, ['zh-CN','en-AU'],{strictMode:true})){
-      const captcha = await this.ctx.service.captcha.generate()
-      await this.app.redis.set(phonenumber,`{"captcha":"${captcha}"}`).then(
+      await this.app.redis.get(para.phonenumber).then(
         async (res) => {
-          await that.app.redis.expire(phonenumber,120)
-          that.ctx.status = 200
-          that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:captcha}
+          const user_temp_ob = JSON.parse(res) 
+          if(user_temp_ob == null){
+            const captcha = await this.ctx.service.captcha.generate()
+            const count = 1
+            await this.app.redis.set(phonenumber,`{"captcha":"${captcha}","count":"${count}"}`).then(
+              async (res) => {
+                await that.app.redis.expire(phonenumber,120)
+                that.ctx.status = 200
+                that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:captcha}
+              }
+            )
+          }else {
+            user_temp_ob.count += 1
+            that.ctx.status = 400
+            that.ctx.body = {msg:'the captcha has been sent already'}
+          }
         }
-      )
+      )      
     }else {
       this.ctx.status = 400
       this.ctx.body = {msg:'Please input a phonenumber avaliable'}
