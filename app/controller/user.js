@@ -35,16 +35,17 @@ class UserController extends Controller {
                 that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:captcha}
               }
             )
-          }else {
-            const _count = user_temp_ob.count + 1
-            if(_count >= 3){
+          }else {            
+            const _count = Number(user_temp_ob.count) + 1
+            if(_count > 2){
               that.ctx.status = 400
-              that.ctx.body = {msg:'the api is limited, please try later'}
+              that.ctx.body = {msg:'the api is limited, please try later'}              
             }else {
               await this.app.redis.set(phonenumber,`{"captcha":"${user_temp_ob.captcha}","count":"${_count}"}`).then(
-                async (res) => {                  
+                async (res) => {       
+                  await that.app.redis.expire(phonenumber,60)           
                   that.ctx.status = 200
-                  that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:user_temp_ob.captcha}
+                  that.ctx.body = {msg:'the captcha will expire in one minutes',captcha:user_temp_ob.captcha}
                 }
               )
             }            
