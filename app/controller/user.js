@@ -36,9 +36,18 @@ class UserController extends Controller {
               }
             )
           }else {
-            user_temp_ob.count += 1
-            that.ctx.status = 400
-            that.ctx.body = {msg:'the captcha has been sent already'}
+            const _count = user_temp_ob.count + 1
+            if(_count >= 3){
+              that.ctx.status = 400
+              that.ctx.body = {msg:'the api is limited, please try later'}
+            }else {
+              await this.app.redis.set(phonenumber,`{"captcha":"${user_temp_ob.captcha}","count":"${_count}"}`).then(
+                async (res) => {                  
+                  that.ctx.status = 200
+                  that.ctx.body = {msg:'the captcha will expire in two minutes',captcha:user_temp_ob.captcha}
+                }
+              )
+            }            
           }
         }
       )      
